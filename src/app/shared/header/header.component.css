@@ -1,0 +1,15 @@
+.mat-toolbar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .material-icons {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
