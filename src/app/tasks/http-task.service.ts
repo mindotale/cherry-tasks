@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from './task.model';
 import { TaskService } from './task.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpTaskService implements TaskService {
-  private readonly baseUrl = 'https://example.com/tasks';
+  private readonly baseUrl = `${environment.apiUrl}/tasks`;
 
   constructor(private http: HttpClient) {}
 
