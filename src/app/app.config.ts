@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { TaskService } from './tasks/task.service';
-import { DummyTaskService } from './tasks/dummy-task.service';
+import { TaskService } from './tasks/shared/task.service';
+import { DummyTaskService } from './tasks/shared/dummy-task.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), provideHttpClient(), { provide: TaskService, useClass: DummyTaskService }],
