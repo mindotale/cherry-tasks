@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Task } from './task.model';
 import { TaskService } from './task.service';
 
@@ -18,34 +18,48 @@ export class DummyTaskService implements TaskService {
       id: '2',
       title: 'Dummy Task 2',
       description: 'Another dummy task.',
-      isCompleted: false
+      isCompleted: false,
     },
   ];
 
   getTasks(): Observable<Task[]> {
-    return of(this.tasks);
+    return of([...this.tasks]);
   }
 
   getTask(id: string): Observable<Task | undefined> {
     const task = this.tasks.find((t) => t.id === id);
-    return of(task);
+    if (task) {
+      return of({ ...task });
+    } else {
+      return throwError(() => new Error(`Task with id ${id} not found`));
+    }
   }
 
   createTask(task: Task): Observable<Task> {
-    this.tasks.push(task);
+    if (this.tasks.find((t) => t.id === task.id)) {
+      return throwError(() => new Error(`Task with id ${task.id} already exists`));
+    }
+    this.tasks.push({ ...task });
     return of(task);
   }
 
-  updateTask(id: string, task: Task): Observable<Task> {
-    const index = this.tasks.findIndex((t) => t.id === id);
+  updateTask(task: Task): Observable<Task> {
+    const index = this.tasks.findIndex((t) => t.id === task.id);
     if (index !== -1) {
-      this.tasks[index] = { ...task, id };
+      this.tasks[index] = { ...task };
+      return of(task);
+    } else {
+      return throwError(() => new Error(`Task with id ${task.id} not found`));
     }
-    return of(this.tasks[index]);
   }
 
   deleteTask(id: string): Observable<void> {
-    this.tasks = this.tasks.filter((t) => t.id !== id);
-    return of();
+    const index = this.tasks.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      this.tasks.splice(index, 1);
+      return of(undefined);
+    } else {
+      return throwError(() => new Error(`Task with id ${id} not found`));
+    }
   }
 }

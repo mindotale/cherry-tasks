@@ -25,8 +25,8 @@ export class HttpTaskService implements TaskService {
     return this.http.post<Task>(this.baseUrl, task);
   }
 
-  updateTask(id: string, task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.baseUrl}/${id}`, task);
+  updateTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.baseUrl}/${task.id}`, task);
   }
 
   deleteTask(id: string): Observable<void> {
