@@ -12,13 +12,13 @@ export class DummyTaskService implements TaskService {
       id: '1',
       title: 'Dummy Task 1',
       description: 'This is a dummy task.',
-      status: 'OPEN',
+      isCompleted: false,
     },
     {
       id: '2',
       title: 'Dummy Task 2',
       description: 'Another dummy task.',
-      status: 'IN_PROGRESS'
+      isCompleted: false
     },
   ];
 
