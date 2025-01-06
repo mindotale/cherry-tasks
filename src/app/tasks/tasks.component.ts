@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import { TaskCardComponent } from "./task-card/task-card.component";
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Task } from './shared/task.model';
+import { TaskService } from './shared/task.service';
+import { TaskListComponent } from "./task-list/task-list.component";
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskCardComponent],
+  imports: [TaskListComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
-export class TasksComponent {
-  task: Task = {
-    id: '1',
-    title: 'Task 1',
-    description: 'Description 1',
-    completed: false
-  }; 
+export class TasksComponent implements OnInit {
+  tasks = signal<Task[]>([]);
+  taskService = inject(TaskService);
+
+  ngOnInit(): void {
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks.set(tasks);
+    });
+  }
 }
