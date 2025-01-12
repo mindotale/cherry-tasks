@@ -14,7 +14,8 @@ export class DummyTaskService implements TaskService {
       description: 'Description 1',
       completed: false,
     },
-    { id: '2', title: 'Task 2', description: 'Description 2', completed: true },
+    { id: '2', title: 'Task 2', description: 'Description 2', completed: false },
+    { id: '3', title: 'Task 3', description: 'Description 3', completed: false },
   ]);
 
   tasks = this._tasks.asReadonly();
