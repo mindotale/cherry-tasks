@@ -1,20 +1,20 @@
-.task-card {
+.card {
   max-width: 400px;
 }
 
-.task-card-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.task-card-title {
+.title {
   display: flex;
   align-items: center;
   flex-grow: 1;
 }
 
-.task-card-buttons {
+.buttons {
   display: flex;
   align-items: center;
 }

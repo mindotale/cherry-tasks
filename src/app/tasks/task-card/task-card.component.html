@@ -1,14 +1,14 @@
-<mat-card class="task-card" appearance="outlined">
-  <mat-card-header class="task-card-header">
-    <mat-card-title class="task-card-title">
+<mat-card class="card">
+  <mat-card-header class="header">
+    <mat-card-title class="title">
       <mat-checkbox [checked]="task().completed" (change)="onToggleClick($event.checked)"></mat-checkbox>
       {{task().title}}
     </mat-card-title>
-    <div class="task-card-buttons">
-      <button mat-icon-button class="taskcard-edit-button" (click)="onEditClick()">
+    <div class="buttons">
+      <button mat-icon-button (click)="onEditClick()">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button class="taskcard-delete-button" (click)="onDeleteClick()">
+      <button mat-icon-button (click)="onDeleteClick()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
