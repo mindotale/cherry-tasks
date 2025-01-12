@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add New Task</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="form-row">
+      <mat-form-field class="form-control">
+        <input matInput placeholder="Title" formControlName="title">
+        @if (invalidTitle()) {
+          <mat-error>{{titleErrorMessage()}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="form-control">
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        @if (invalidDescription()) {
+          <mat-error>{{descriptionErrorMessage()}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]>Cancel</button>
+  <button mat-button (click)="onAddClick()" cdkFocusInitial>Add</button>
+</mat-dialog-actions>
