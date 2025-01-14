@@ -19,10 +19,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Task } from '../shared/task.model';
+import { AddEditTaskDialogData } from './add-edit-task-dialog-data.model';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-new-task-dialog',
+  selector: 'app-add-edit-task-dialog',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -33,37 +34,29 @@ import { v4 as uuidv4 } from 'uuid';
     MatDialogClose,
     ReactiveFormsModule,
   ],
-  templateUrl: './new-task-dialog.component.html',
-  styleUrl: './new-task-dialog.component.css',
+  templateUrl: './add-edit-task-dialog.component.html',
+  styleUrl: './add-edit-task-dialog.component.css',
 })
-export class NewTaskDialogComponent {
+export class AddEditTaskDialogComponent {
+  private readonly data = inject<AddEditTaskDialogData>(MAT_DIALOG_DATA);
   private readonly maxTitleLength = 10;
   private readonly maxDescriptionLength = 100;
-  private readonly dialogRef = inject(MatDialogRef<NewTaskDialogComponent>);
+  private readonly dialogRef = inject(MatDialogRef<AddEditTaskDialogComponent>);
+  private readonly initialTask: Task = this.data.task ?? {
+    id: uuidv4(),
+    title: '',
+    description: '',
+    completed: false,
+  };
 
   form = new FormGroup({
-    title: new FormControl('', {
+    title: new FormControl(this.initialTask.title, {
       validators: [Validators.maxLength(this.maxTitleLength)],
     }),
-    description: new FormControl('', {
+    description: new FormControl(this.initialTask.description, {
       validators: [Validators.maxLength(this.maxDescriptionLength)],
     }),
   });
-
-  onAddClick(): void {
-    if (this.form.invalid) {
-      return;
-    }
-
-    const task: Task = {
-      id: uuidv4(),
-      title: this.form.value.title ?? '',
-      description: this.form.value.description ?? '',
-      completed: false,
-    };
-
-    this.dialogRef.close(task);
-  }
 
   valueChanges = toSignal(this.form.valueChanges);
 
@@ -71,7 +64,7 @@ export class NewTaskDialogComponent {
     this.valueChanges();
     return this.form.controls.title.invalid;
   });
-  
+
   invalidDescription = computed(() => {
     this.valueChanges();
     return this.form.controls.description.invalid;
@@ -95,4 +88,27 @@ export class NewTaskDialogComponent {
 
     return '';
   });
+
+  headerText(): string {
+    return this.data.editMode ? 'Edit Task' : 'Add Task';
+  }
+
+  completeButtonText(): string {
+    return this.data.editMode ? 'Edit' : 'Add';
+  }
+
+  onCompleteClick(): void {
+    if (this.form.invalid) {
+      return;
+    }
+
+    const task: Task = {
+      id: this.initialTask.id,
+      title: this.form.value.title ?? '',
+      description: this.form.value.description ?? '',
+      completed: this.initialTask.completed,
+    };
+
+    this.dialogRef.close(task);
+  }
 }

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add New Task</h2>
+<h2 mat-dialog-title>{{headerText()}}</h2>
 <mat-dialog-content>
   <form [formGroup]="form" class="form">
     <div class="form-row">
@@ -21,5 +21,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]>Cancel</button>
-  <button mat-button (click)="onAddClick()" cdkFocusInitial>Add</button>
+  <button mat-button (click)="onCompleteClick()" cdkFocusInitial>{{completeButtonText()}}</button>
 </mat-dialog-actions>

@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { TaskService } from './shared/task.service';
 import { TaskListComponent } from './task-list/task-list.component';
-import { NewTaskDialogComponent } from './new-task-dialog/new-task-dialog.component';
+import { AddEditTaskDialogComponent } from './add-edit-task-dialog/add-edit-task-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEditTaskDialogData } from './add-edit-task-dialog/add-edit-task-dialog-data.model';
+import { Task } from './shared/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -18,13 +20,23 @@ export class TasksComponent {
   private readonly dialog = inject(MatDialog);
 
   addTaskClick(): void {
-    const dialogRef = this.dialog.open(NewTaskDialogComponent);
-    const subscription = dialogRef.afterClosed().subscribe((task) => {
-      if (task) {
-        this.taskService.createTask(task).subscribe();
-      }
+    const dialogRef = this.dialog.open<
+      AddEditTaskDialogComponent,
+      AddEditTaskDialogData,
+      Task
+    >(AddEditTaskDialogComponent, {
+      data: {
+        editMode: false,
+      },
+    });
+    const subscription = dialogRef.afterClosed().subscribe({
+      next: (task) => {
+        if (task) {
+          this.taskService.createTask(task).subscribe();
+        }
 
-      subscription.unsubscribe();
+        subscription.unsubscribe();
+      },
     });
   }
 }
