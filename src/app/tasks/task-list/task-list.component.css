@@ -1,0 +1,14 @@
+.task-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.task-card {
+    display: block;
+    flex: 1;
+    margin-bottom: 1rem;
+}

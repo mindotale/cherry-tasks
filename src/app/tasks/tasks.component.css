@@ -1,0 +1,22 @@
+.tasks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem
+  }
+  
+  .buttons {
+    margin-bottom: 1rem;
+  }
+
+  .task-list {
+    flex: 1;
+  }

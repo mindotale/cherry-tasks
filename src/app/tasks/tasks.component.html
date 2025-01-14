@@ -1,2 +1,8 @@
-<button mat-raised-button (click)="addTaskClick()">Add Task</button>
-<app-task-list class="tasks" [tasks]="tasks()"></app-task-list>
+<section class="tasks">
+    <div class="content">
+        <div class="buttons">
+            <button mat-raised-button (click)="addTaskClick()">Add Task</button>
+        </div>
+        <app-task-list class="task-list" [tasks]="tasks()"></app-task-list>
+    </div>
+</section>
