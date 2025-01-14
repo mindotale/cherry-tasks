@@ -39,8 +39,8 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AddEditTaskDialogComponent {
   private readonly data = inject<AddEditTaskDialogData>(MAT_DIALOG_DATA);
-  private readonly maxTitleLength = 10;
-  private readonly maxDescriptionLength = 100;
+  private readonly maxTitleLength = 100;
+  private readonly maxDescriptionLength = 1000;
   private readonly dialogRef = inject(MatDialogRef<AddEditTaskDialogComponent>);
   private readonly initialTask: Task = this.data.task ?? {
     id: uuidv4(),
